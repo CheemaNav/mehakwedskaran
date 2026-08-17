@@ -16,6 +16,10 @@ function isValidEmail(email) {
   return /^[A-Z]{2,}$/i.test(tld);
 }
 
+function env(name) {
+  return String(process.env[name] || '').trim().replace(/^['"]|['"]$/g, '');
+}
+
 function readBody(req) {
   if (req.body && typeof req.body === 'object') return req.body;
   if (typeof req.body === 'string' && req.body) {
@@ -24,13 +28,35 @@ function readBody(req) {
   return {};
 }
 
+function mailConfig() {
+  const host = env('SMTP_HOST');
+  const user = env('SMTP_USER');
+  const pass = (env('SMTP_PASS') || env('SMTP_PASSWORD')).replace(/\s+/g, '');
+  const to = env('MAIL_TO') || user;
+  const from = env('MAIL_FROM') || user;
+  const port = Number(env('SMTP_PORT') || 587);
+  const secure = env('SMTP_SECURE') === 'true' || port === 465;
+  const missing = [
+    !host && 'SMTP_HOST',
+    !user && 'SMTP_USER',
+    !pass && 'SMTP_PASS',
+    !to && 'MAIL_TO'
+  ].filter(Boolean);
+  return { host, user, pass, to, from, port, secure, missing };
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
 
   if (req.method === 'OPTIONS') {
     res.status(204).end();
+    return;
+  }
+  if (req.method === 'GET') {
+    const { missing } = mailConfig();
+    res.status(200).json({ ok: missing.length === 0, mailConfigured: missing.length === 0, missing });
     return;
   }
   if (req.method !== 'POST') {
@@ -38,16 +64,10 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  const to = process.env.MAIL_TO || user;
-  const from = process.env.MAIL_FROM || user;
-  const port = Number(process.env.SMTP_PORT || 587);
-  const secure = process.env.SMTP_SECURE === 'true' || port === 465;
+  const { host, user, pass, to, from, port, secure, missing } = mailConfig();
 
-  if (!host || !user || !pass || !to) {
-    res.status(500).json({ ok: false, error: 'Mail is not configured' });
+  if (missing.length) {
+    res.status(500).json({ ok: false, error: 'Mail is not configured', missing });
     return;
   }
 
@@ -103,7 +123,12 @@ module.exports = async (req, res) => {
       host,
       port,
       secure,
-      auth: { user, pass }
+      requireTLS: port === 587,
+      auth: { user, pass },
+      tls: { minVersion: 'TLSv1.2' },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 20000
     });
 
     await transporter.sendMail({
