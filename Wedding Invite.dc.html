@@ -196,7 +196,60 @@ input::placeholder{color:#a98b95}
       </div>
       <div>
         <label style="display:block;margin-bottom:7px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#63404c">Phone <span style="color:#9c4a63">*</span></label>
-        <input type="tel" value="{{ phone }}" onChange="{{ onPhone }}" placeholder="+1 (000) 000-0000" style="width:100%;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
+        <div style="display:flex;gap:8px;align-items:stretch">
+          <select value="{{ dialCode }}" onChange="{{ onDialCode }}" aria-label="Country code" style="width:108px;flex-shrink:0;box-sizing:border-box;padding:13px 8px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029;cursor:pointer">
+            <option value="+1">+1</option>
+            <option value="+7">+7</option>
+            <option value="+20">+20</option>
+            <option value="+27">+27</option>
+            <option value="+31">+31</option>
+            <option value="+32">+32</option>
+            <option value="+33">+33</option>
+            <option value="+34">+34</option>
+            <option value="+39">+39</option>
+            <option value="+41">+41</option>
+            <option value="+43">+43</option>
+            <option value="+44">+44</option>
+            <option value="+45">+45</option>
+            <option value="+46">+46</option>
+            <option value="+47">+47</option>
+            <option value="+48">+48</option>
+            <option value="+49">+49</option>
+            <option value="+52">+52</option>
+            <option value="+55">+55</option>
+            <option value="+60">+60</option>
+            <option value="+61">+61</option>
+            <option value="+62">+62</option>
+            <option value="+63">+63</option>
+            <option value="+64">+64</option>
+            <option value="+65">+65</option>
+            <option value="+66">+66</option>
+            <option value="+81">+81</option>
+            <option value="+82">+82</option>
+            <option value="+86">+86</option>
+            <option value="+90">+90</option>
+            <option value="+91">+91</option>
+            <option value="+92">+92</option>
+            <option value="+94">+94</option>
+            <option value="+212">+212</option>
+            <option value="+234">+234</option>
+            <option value="+254">+254</option>
+            <option value="+351">+351</option>
+            <option value="+353">+353</option>
+            <option value="+852">+852</option>
+            <option value="+880">+880</option>
+            <option value="+886">+886</option>
+            <option value="+965">+965</option>
+            <option value="+966">+966</option>
+            <option value="+968">+968</option>
+            <option value="+971">+971</option>
+            <option value="+972">+972</option>
+            <option value="+973">+973</option>
+            <option value="+974">+974</option>
+            <option value="+977">+977</option>
+          </select>
+          <input type="tel" inputMode="numeric" autocomplete="tel-national" maxlength="15" value="{{ phone }}" onChange="{{ onPhone }}" placeholder="000 000 0000" style="flex:1;min-width:0;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
+        </div>
       </div>
       <div>
         <label style="display:block;margin-bottom:9px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#63404c">Will you be attending? <span style="color:#9c4a63">*</span></label>
@@ -235,7 +288,16 @@ input::placeholder{color:#a98b95}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:900},&quot;showCountdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showGallery&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;formEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;},&quot;accessKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;}}">
 class Component extends DCLogic {
-  state = { now: Date.now(), showCal: false, name: '', email: '', phone: '', attending: '', guests: '1', message: '', error: '', submitted: false, sending: false };
+  state = { now: Date.now(), showCal: false, name: '', email: '', phone: '', dialCode: '+1', attending: '', guests: '1', message: '', error: '', submitted: false, sending: false };
+
+  isValidEmail(email) {
+    const value = String(email || '').trim();
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9-]+(?:\.[A-Z0-9-]+)+$/i.test(value)) return false;
+    if (value.includes('..')) return false;
+    const domain = value.split('@')[1] || '';
+    const tld = domain.split('.').pop() || '';
+    return /^[A-Z]{2,}$/i.test(tld);
+  }
 
   componentDidMount() {
     this.timer = setInterval(() => this.setState({ now: Date.now() }), 1000);
@@ -254,7 +316,7 @@ class Component extends DCLogic {
       from_name: 'Mehak & Karan Wedding RSVP',
       name: s.name,
       email: s.email,
-      phone: s.phone,
+      phone: `${s.dialCode || '+1'} ${s.phone}`.trim(),
       attending: s.attending === 'yes' ? "Yes, I'll be there!" : "Sorry, I can't make it",
       guests: s.attending === 'yes' ? s.guests : '0',
       message: s.message || '—',
@@ -318,10 +380,11 @@ class Component extends DCLogic {
       showCal: s.showCal,
       calLinks,
       toggleCal: () => this.setState(p => ({ showCal: !p.showCal })),
-      name: s.name, email: s.email, phone: s.phone, guests: s.guests,
+      name: s.name, email: s.email, phone: s.phone, dialCode: s.dialCode || '+1', guests: s.guests,
       onName: e => this.setState({ name: e.target.value }),
       onEmail: e => this.setState({ email: e.target.value }),
-      onPhone: e => this.setState({ phone: e.target.value }),
+      onPhone: e => this.setState({ phone: String(e.target.value || '').replace(/\D/g, '').slice(0, 15) }),
+      onDialCode: e => this.setState({ dialCode: e.target.value }),
       message: s.message,
       onMessage: e => this.setState({ message: e.target.value }),
       onGuests: e => this.setState({ guests: e.target.value.replace(/[^0-9]/g, '') }),
@@ -343,7 +406,7 @@ class Component extends DCLogic {
       submit: () => {
         const { name, email, phone, attending, guests } = this.state;
         if (!name.trim()) return this.setState({ error: 'Please enter your name.' });
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) return this.setState({ error: 'Please enter a valid email address.' });
+        if (!this.isValidEmail(email)) return this.setState({ error: 'Please enter a valid email address with a domain (for example name@gmail.com).' });
         if (phone.replace(/\D/g, '').length < 7) return this.setState({ error: 'Please enter a valid phone number.' });
         if (!attending) return this.setState({ error: 'Please let us know if you can attend.' });
         if (attending === 'yes' && (!guests || Number(guests) < 1)) return this.setState({ error: 'Please enter the number of guests.' });
