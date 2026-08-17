@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Karla:wght@300;400;500&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f7e6e9;font-family:Karla,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#5c2333}a:hover{color:#9c4a63}
+input,select,button,textarea{font-family:inherit}
+input:focus,select:focus{outline:none;border-color:#9c4a63 !important}
+input::placeholder{color:#a98b95}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{opacity:.5}50%{opacity:1}}
+</style>
+</helmet>
+
+<div style="max-width:560px;margin:0 auto;background:#fdf7f8;color:#3b2029;min-height:100vh;box-shadow:0 0 80px rgba(0,0,0,.4);overflow:hidden">
+
+  <section style="position:relative;background:#f7e6e9;color:#5c2333;padding:clamp(40px,10vw,56px) clamp(20px,6vw,32px) 44px;text-align:center;overflow:hidden">
+    <div style="position:absolute;inset:14px;border:1px solid rgba(176,107,129,.35);border-radius:200px 200px 8px 8px;pointer-events:none"></div>
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:18px">
+      <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:52px;line-height:1;color:#9c4a63;animation:fadeUp .8s ease both">ॐ</div>
+      <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:19px;letter-spacing:.02em;color:#6b4551;">॥ श्री गणेशाय नमः ॥</div>
+      <div style="display:flex;align-items:center;gap:10px;opacity:.7"><span style="display:block;width:44px;height:1px;background:#9c4a63"></span><span style="display:block;width:5px;height:5px;transform:rotate(45deg);background:#9c4a63"></span><span style="display:block;width:44px;height:1px;background:#9c4a63"></span></div>
+      <p style="margin:0;max-width:420px;font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.7;font-weight:300;color:#6b4551;text-wrap:pretty">With the blessings of our beloved grandparents,<br>Late Sh. Shanti Saroop Singal and Mrs. Santosh Singal, and with the blessings of our parents and elders, we cordially invite you to grace the auspicious occasion of our wedding and join us as we begin our beautiful journey of love and togetherness.</p>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#f7e6e9;padding:0 0 40px">
+    <div style="position:relative;margin:0 clamp(16px,5vw,24px);border:1px solid rgba(176,107,129,.35);border-radius:220px 220px 10px 10px;padding:10px;overflow:hidden">
+      <img src="uploads/pasted-1786846270367-0.png" alt="Mehak and Karan" style="display:block;width:100%;height:420px;object-fit:cover;object-position:50% 32%;border-radius:210px 210px 6px 6px;filter:saturate(.95)">
+    </div>
+  </section>
+
+  <section style="background:#fdf7f8;padding:48px clamp(20px,6vw,32px) 44px;text-align:center">
+    <div style="font-family:Karla,sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:#9c4a63">Together with families</div>
+    <h1 style="margin:22px 0 0;font-family:'Great Vibes',cursive;font-size:clamp(58px,17vw,74px);line-height:1.05;font-weight:400;color:#5c2333">Mehak</h1>
+    <div style="margin:6px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#6b4551">D/O Komal Singal and Parul Singal</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin:22px 0">
+      <span style="display:block;width:70px;height:1px;background:rgba(92,35,51,.18)"></span>
+      <span style="font-family:'Cormorant Garamond',serif;font-family:'Great Vibes',cursive;font-size:30px;color:#9c4a63">weds</span>
+      <span style="display:block;width:70px;height:1px;background:rgba(92,35,51,.18)"></span>
+    </div>
+    <h1 style="margin:0;font-family:'Great Vibes',cursive;font-size:clamp(58px,17vw,74px);line-height:1.05;font-weight:400;color:#5c2333">Karan</h1>
+    <div style="margin:6px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#6b4551">S/O Vijay Singla and Madhu Singla</div>
+    <div style="display:inline-block;margin-top:28px;padding:7px 18px;border:1px solid rgba(176,107,129,.5);border-radius:100px;font-size:12px;letter-spacing:.3em;color:#9c4a63">#MEHRAN</div>
+  </section>
+
+  <sc-if value="{{ showCountdown }}" hint-placeholder-val="{{ true }}">
+  <section style="background:#fdf7f8;color:#5c2333;padding:38px clamp(14px,4vw,24px) 42px;text-align:center">
+    <div style="font-family:Karla,sans-serif;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#9c4a63;opacity:.9">Counting down to the pheras</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(5px,1.6vw,8px);max-width:400px;margin:22px auto 0">
+      <div style="padding:clamp(11px,3vw,14px) 2px;border:1px solid rgba(176,107,129,.3);border-radius:6px"><div style="font-family:Cinzel,serif;font-size:clamp(24px,7.4vw,30px);line-height:1;color:#5c2333">{{ cd.d }}</div><div style="margin-top:7px;font-size:10px;letter-spacing:.2em;color:#6e4a58">DAYS</div></div>
+      <div style="padding:clamp(11px,3vw,14px) 2px;border:1px solid rgba(176,107,129,.3);border-radius:6px"><div style="font-family:Cinzel,serif;font-size:clamp(24px,7.4vw,30px);line-height:1;color:#5c2333">{{ cd.h }}</div><div style="margin-top:7px;font-size:10px;letter-spacing:.2em;color:#6e4a58">HOURS</div></div>
+      <div style="padding:clamp(11px,3vw,14px) 2px;border:1px solid rgba(176,107,129,.3);border-radius:6px"><div style="font-family:Cinzel,serif;font-size:clamp(24px,7.4vw,30px);line-height:1;color:#5c2333">{{ cd.m }}</div><div style="margin-top:7px;font-size:10px;letter-spacing:.2em;color:#6e4a58">MINUTES</div></div>
+      <div style="padding:clamp(11px,3vw,14px) 2px;border:1px solid rgba(176,107,129,.3);border-radius:6px"><div style="font-family:Cinzel,serif;font-size:clamp(24px,7.4vw,30px);line-height:1;color:#9c4a63">{{ cd.s }}</div><div style="margin-top:7px;font-size:10px;letter-spacing:.2em;color:#6e4a58">SECONDS</div></div>
+    </div>
+    <sc-if value="{{ showLocal }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:16px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:#6e4a58">{{ localLine }}</div>
+    </sc-if>
+  </section>
+  </sc-if>
+
+  <section style="background:#fdf7f8;padding:44px clamp(20px,6vw,32px);text-align:center">
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#9c4a63">Save the date</div>
+    <div style="margin-top:12px;font-family:Cinzel,serif;font-size:30px;color:#5c2333">Sunday, September 13, 2026</div>
+    <div style="margin-top:8px;font-size:14px;letter-spacing:.16em;color:#63404c">4:00 PM ONWARDS</div>
+
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;margin-top:22px">
+      <button onClick="{{ toggleCal }}" style="display:flex;align-items:center;gap:9px;padding:13px 24px;background:#8f3450;color:#fff5f7;border:none;border-radius:100px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer" style-hover="background:#a13e5c">Add to calendar</button>
+      <sc-if value="{{ showCal }}" hint-placeholder-val="{{ false }}">
+        <div style="width:min(280px,100%);margin-top:10px;background:#fff;border:1px solid rgba(92,35,51,.12);border-radius:10px;box-shadow:0 12px 32px rgba(92,35,51,.14);overflow:hidden;text-align:left">
+          <sc-for list="{{ calLinks }}" as="c" hint-placeholder-count="5">
+            <a href="{{ c.href }}" download="{{ c.download }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:13px 16px;font-size:13px;color:#3b2029;text-decoration:none;border-bottom:1px solid rgba(92,35,51,.07)" style-hover="background:#f2efe6">{{ c.label }}</a>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section style="background:#fbeef1;padding:38px clamp(20px,6vw,32px);text-align:center">
+    <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#9c4a63">The venue</div>
+    <div style="margin-top:14px;font-family:Cinzel,serif;font-size:26px;color:#5c2333">Nuvo Event Space</div>
+    <div style="margin-top:8px;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.6;color:#6b4551">7920 Mississauga Rd,<br>Brampton, ON L6Y 0J9</div>
+    <a href="https://maps.app.goo.gl/tgVfa7hrMdwaFzkY7" target="_blank" rel="noopener" style="display:inline-block;margin-top:20px;padding:12px 24px;border:1px solid #5c2333;border-radius:100px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5c2333;text-decoration:none" style-hover="background:#8f3450;color:#fff5f7">Open in Google Maps</a>
+  </section>
+
+  <section style="background:#fdf7f8;padding:48px clamp(20px,6vw,32px)">
+    <div style="text-align:center;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#9c4a63">Program</div>
+    <h2 style="margin:12px 0 32px;text-align:center;font-family:Cinzel,serif;font-size:28px;font-weight:400;color:#5c2333">The day, hour by hour</h2>
+    <div style="display:flex;flex-direction:column;gap:26px">
+      <div style="display:grid;grid-template-columns:14px 1fr;gap:16px;align-items:start">
+        <div style="display:flex;flex-direction:column;align-items:center;height:100%"><span style="width:9px;height:9px;margin-top:7px;transform:rotate(45deg);background:#9c4a63"></span><span style="flex:1;width:1px;background:rgba(92,35,51,.16);margin-top:6px"></span></div>
+        <div>
+          <div style="font-family:Cinzel,serif;font-size:22px;color:#5c2333">Bandhan &amp; Blessings</div>
+          <div style="margin-top:5px;font-size:12.5px;letter-spacing:.12em;color:#9c4a63">SEP 13, 2026 · 4:30 PM</div>
+          <p style="margin:9px 0 0;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.6;color:#6b4551;text-wrap:pretty">Seven sacred vows, one eternal bond, and countless blessings as two hearts become one</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:14px 1fr;gap:16px;align-items:start">
+        <div style="display:flex;flex-direction:column;align-items:center"><span style="width:9px;height:9px;margin-top:7px;transform:rotate(45deg);background:#9c4a63"></span></div>
+        <div>
+          <div style="font-family:Cinzel,serif;font-size:22px;color:#5c2333">Celebration ki Shaam</div>
+          <div style="margin-top:5px;font-size:12.5px;letter-spacing:.12em;color:#9c4a63">SEP 13, 2026 · 7:30 PM</div>
+          <p style="margin:9px 0 0;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.6;color:#6b4551;text-wrap:pretty">An evening of love, laughter, music, and cherished memories as we celebrate our beautiful journey together.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ showGallery }}" hint-placeholder-val="{{ true }}">
+  <section style="background:#f7e6e9;padding:44px clamp(20px,6vw,32px);text-align:center">
+    <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#9c4a63">#Mehran</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px">
+      <img src="uploads/pasted-1786846265621-0.png" alt="Mehak and Karan by the lake" style="width:100%;height:230px;object-fit:cover;object-position:60% 40%;border-radius:120px 120px 6px 6px;border:1px solid rgba(176,107,129,.35)">
+      <img src="uploads/pasted-1786846270367-0.png" alt="Mehak and Karan at the ceremony" style="width:100%;height:230px;object-fit:cover;object-position:50% 40%;border-radius:120px 120px 6px 6px;border:1px solid rgba(176,107,129,.35)">
+    </div>
+    <p style="margin:20px auto 0;max-width:340px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.6;color:#6b4551">Two families, one celebration. We would love to have you with us.</p>
+  </section>
+  </sc-if>
+
+  <section style="background:#f7e6e9;padding:44px clamp(20px,6vw,32px);text-align:center">
+    <div style="max-width:400px;margin:0 auto;padding:32px clamp(18px,5vw,24px);border:1px solid rgba(156,74,99,.32);border-radius:10px">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;opacity:.75"><span style="display:block;width:36px;height:1px;background:#9c4a63"></span><span style="display:block;width:5px;height:5px;transform:rotate(45deg);background:#9c4a63"></span><span style="display:block;width:36px;height:1px;background:#9c4a63"></span></div>
+      <div style="margin-top:18px;font-family:Cinzel,serif;font-size:15px;letter-spacing:.2em;color:#5c2333">NO GIFTS • NO SHAGUNS</div>
+      <p style="margin:16px 0 0;font-family:'Great Vibes',cursive;font-size:28px;line-height:1.3;color:#9c4a63">Your love is the only gift we seek.</p>
+      <p style="margin:12px 0 0;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.65;color:#6b4551;text-wrap:pretty">Please grace us with your presence and make our celebration truly special.</p>
+    </div>
+  </section>
+
+  <section style="background:#fbeef1;padding:48px clamp(18px,5vw,28px) 56px">
+    <div style="text-align:center;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#9c4a63">RSVP</div>
+    <h2 style="margin:12px 0 6px;text-align:center;font-family:Cinzel,serif;font-size:28px;font-weight:400;color:#5c2333">Kindly let us know</h2>
+    <p style="margin:0 auto 26px;max-width:340px;text-align:center;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.6;color:#6b4551">So we can keep a seat and a plate ready for you.</p>
+
+    <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:400px;margin:0 auto;padding:34px 26px;background:#fff;border:1px solid rgba(176,107,129,.4);border-radius:12px;text-align:center">
+        <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:30px;color:#9c4a63">ॐ</div>
+        <div style="margin-top:12px;font-family:Cinzel,serif;font-size:24px;color:#5c2333">{{ thanksTitle }}</div>
+        <p style="margin:10px 0 0;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.6;color:#6b4551">{{ thanksBody }}</p>
+        <button onClick="{{ resetForm }}" style="margin-top:20px;padding:9px 18px;background:none;border:1px solid rgba(92,35,51,.25);border-radius:100px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5c2333;cursor:pointer">Edit response</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ true }}">
+    <div style="max-width:400px;margin:0 auto;display:flex;flex-direction:column;gap:16px">
+      <div>
+        <label style="display:block;margin-bottom:7px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#63404c">Name <span style="color:#9c4a63">*</span></label>
+        <input value="{{ name }}" onChange="{{ onName }}" placeholder="Your full name" style="width:100%;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
+      </div>
+      <div>
+        <label style="display:block;margin-bottom:7px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#63404c">Email <span style="color:#9c4a63">*</span></label>
+        <input type="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="you@example.com" style="width:100%;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
+      </div>
+      <div>
+        <label style="display:block;margin-bottom:7px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#63404c">Phone <span style="color:#9c4a63">*</span></label>
+        <input type="tel" value="{{ phone }}" onChange="{{ onPhone }}" placeholder="+1 (000) 000-0000" style="width:100%;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
+      </div>
+      <div>
+        <label style="display:block;margin-bottom:9px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#63404c">Will you be attending? <span style="color:#9c4a63">*</span></label>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <button onClick="{{ pickYes }}" style="{{ yesStyle }}">Yes, I'll be there!</button>
+          <button onClick="{{ pickNo }}" style="{{ noStyle }}">Sorry, I can't make it</button>
+        </div>
+      </div>
+      <sc-if value="{{ isYes }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:fadeUp .3s ease both">
+          <label style="display:block;margin-bottom:7px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#63404c">How many guests (Including Yourself)? <span style="color:#9c4a63">*</span></label>
+          <input inputMode="numeric" value="{{ guests }}" onChange="{{ onGuests }}" placeholder="1" style="width:100%;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
+        </div>
+      </sc-if>
+      <div>
+        <label style="display:block;margin-bottom:7px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7a505c">Your Message</label>
+        <textarea value="{{ message }}" onChange="{{ onMessage }}" rows="4" placeholder="Write your wishes..." style="width:100%;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;line-height:1.5;color:#3b2029;resize:vertical"></textarea>
+      </div>
+      <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:11px 13px;background:#fbeceb;border:1px solid #e2b4b0;border-radius:8px;font-size:13px;color:#8f3a33">{{ error }}</div>
+      </sc-if>
+      <button onClick="{{ submit }}" style="margin-top:4px;padding:15px;background:#8f3450;color:#fff5f7;border:none;border-radius:100px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer" style-hover="background:#a13e5c">{{ submitLabel }}</button>
+      <div style="text-align:center;font-size:12.5px;color:#6b4551">Kindly respond by August 30, 2026</div>
+    </div>
+    </sc-if>
+  </section>
+
+  <footer style="background:#f7e6e9;color:#6b4551;padding:40px clamp(20px,6vw,32px) 46px;text-align:center">
+    <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:26px;color:#9c4a63">ॐ</div>
+    <div style="margin-top:14px;font-family:'Great Vibes',cursive;font-size:44px;letter-spacing:.02em;color:#5c2333">#Mehran</div>
+    <p style="margin:12px auto 0;max-width:300px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.6;opacity:.8">Share your photos and wishes with our hashtag</p>
+    <div style="margin-top:24px;font-size:11px;letter-spacing:.3em;color:#7a5a66">MEHAK &amp; KARAN · 13 · 09 · 2026</div>
+  </footer>
+  <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#f7e6e9"/><circle cx="100" cy="100" r="58" fill="none" stroke="#9c4a63" stroke-width="2"/><text x="100" y="116" text-anchor="middle" font-family="Georgia,serif" font-size="52" fill="#5c2333">M&amp;K</text></svg></template>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:900},&quot;showCountdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showGallery&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;formEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;},&quot;accessKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;}}">
+class Component extends DCLogic {
+  state = { now: Date.now(), showCal: false, name: '', email: '', phone: '', attending: '', guests: '1', message: '', error: '', submitted: false, sending: false };
+
+  componentDidMount() {
+    this.timer = setInterval(() => this.setState({ now: Date.now() }), 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+
+  ics() {
+    const body = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Mehran//Wedding//EN','BEGIN:VEVENT','UID:mehran-2026@wedding','DTSTAMP:20260816T000000Z','DTSTART;TZID=America/Toronto:20260913T160000','DTEND;TZID=America/Toronto:20260913T230000','SUMMARY:Mehak weds Karan #Mehran','LOCATION:Nuvo Event Space\\, 7920 Mississauga Rd\\, Brampton\\, ON L6Y 0J9','DESCRIPTION:Bandhan & Blessings 4:30 PM \\n Celebration ki Shaam 7:30 PM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+    return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(body);
+  }
+
+  async send() {
+    const s = this.state;
+    const payload = {
+      subject: `RSVP · ${s.name} · #Mehran`,
+      from_name: 'Mehak & Karan Wedding RSVP',
+      name: s.name,
+      email: s.email,
+      phone: s.phone,
+      attending: s.attending === 'yes' ? "Yes, I'll be there!" : "Sorry, I can't make it",
+      guests: s.attending === 'yes' ? s.guests : '0',
+      message: s.message || '—',
+      submitted_at: new Date().toString()
+    };
+    const endpoint = this.props.formEndpoint || '';
+    const key = this.props.accessKey || '';
+    if (!endpoint) { this.setState({ error: '', submitted: true }); console.log('RSVP (no endpoint configured):', payload); return; }
+    this.setState({ sending: true, error: '' });
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(key ? { access_key: key, ...payload } : payload)
+      });
+      if (!res.ok) throw new Error('bad status ' + res.status);
+      this.setState({ sending: false, submitted: true });
+    } catch (err) {
+      console.error(err);
+      this.setState({ sending: false, error: 'We could not send your RSVP just now. Please try again, or WhatsApp us.' });
+    }
+  }
+
+  renderVals() {
+    const s = this.state;
+    const target = new Date('2026-09-13T16:00:00-04:00').getTime();
+    let diff = Math.max(0, target - s.now);
+    const pad = n => String(n).padStart(2, '0');
+    const cd = {
+      d: pad(Math.floor(diff / 864e5)),
+      h: pad(Math.floor(diff / 36e5) % 24),
+      m: pad(Math.floor(diff / 6e4) % 60),
+      s: pad(Math.floor(diff / 1e3) % 60)
+    };
+
+    const title = encodeURIComponent('Mehak weds Karan · #Mehran');
+    const loc = encodeURIComponent('Nuvo Event Space, 7920 Mississauga Rd, Brampton, ON L6Y 0J9');
+    const desc = encodeURIComponent('Bandhan & Blessings 4:30 PM · Celebration ki Shaam 7:30 PM');
+    const calLinks = [
+      { label: 'Google Calendar', href: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20260913T200000Z/20260914T030000Z&details=${desc}&location=${loc}` },
+      { label: 'Outlook / Office 365', href: `https://outlook.office.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${title}&startdt=2026-09-13T16:00:00-04:00&enddt=2026-09-13T23:00:00-04:00&body=${desc}&location=${loc}` },
+      { label: 'Outlook.com', href: `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${title}&startdt=2026-09-13T16:00:00-04:00&enddt=2026-09-13T23:00:00-04:00&body=${desc}&location=${loc}` },
+      { label: 'Yahoo Calendar', href: `https://calendar.yahoo.com/?v=60&title=${title}&st=20260913T200000Z&et=20260914T030000Z&desc=${desc}&in_loc=${loc}` },
+      { label: 'Apple Calendar / Other (.ics)', href: this.ics(), download: 'mehak-karan-wedding.ics' }
+    ];
+
+    const base = 'padding:14px;border-radius:100px;font-size:14px;letter-spacing:.04em;cursor:pointer;text-align:center;transition:all .18s ease;';
+    const on = base + 'background:#8f3450;color:#fff5f7;border:1px solid #5c2333;';
+    const off = base + 'background:#fff;color:#3b2029;border:1px solid rgba(92,35,51,.18);';
+
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    const localStart = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }).format(new Date(target));
+    const isToronto = tz === 'America/Toronto';
+
+    return {
+      cd,
+      localLine: isToronto ? '' : `In your time zone (${tz}): ${localStart}`,
+      showLocal: false,
+      showCountdown: this.props.showCountdown ?? true,
+      showGallery: this.props.showGallery ?? true,
+      showCal: s.showCal,
+      calLinks,
+      toggleCal: () => this.setState(p => ({ showCal: !p.showCal })),
+      name: s.name, email: s.email, phone: s.phone, guests: s.guests,
+      onName: e => this.setState({ name: e.target.value }),
+      onEmail: e => this.setState({ email: e.target.value }),
+      onPhone: e => this.setState({ phone: e.target.value }),
+      message: s.message,
+      onMessage: e => this.setState({ message: e.target.value }),
+      onGuests: e => this.setState({ guests: e.target.value.replace(/[^0-9]/g, '') }),
+      isYes: s.attending === 'yes',
+      yesStyle: s.attending === 'yes' ? on : off,
+      noStyle: s.attending === 'no' ? on : off,
+      pickYes: () => this.setState({ attending: 'yes', guests: this.state.guests || '1', error: '' }),
+      pickNo: () => this.setState({ attending: 'no', error: '' }),
+      error: s.error,
+      submitted: s.submitted,
+      formOpen: !s.submitted,
+      thanksTitle: s.attending === 'yes' ? 'See you there!' : 'We will miss you',
+      thanksBody: s.attending === 'yes'
+        ? `Thank you, ${s.name.split(' ')[0] || 'friend'}. ${s.guests} ${s.guests === '1' ? 'seat is' : 'seats are'} reserved in your name. #Mehran`
+        : 'Thank you for letting us know. Your blessings will be with us on the day. #Mehran',
+      resetForm: () => this.setState({ submitted: false }),
+      sending: s.sending,
+      submitLabel: s.sending ? 'Sending…' : 'Send RSVP',
+      submit: () => {
+        const { name, email, phone, attending, guests } = this.state;
+        if (!name.trim()) return this.setState({ error: 'Please enter your name.' });
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) return this.setState({ error: 'Please enter a valid email address.' });
+        if (phone.replace(/\D/g, '').length < 7) return this.setState({ error: 'Please enter a valid phone number.' });
+        if (!attending) return this.setState({ error: 'Please let us know if you can attend.' });
+        if (attending === 'yes' && (!guests || Number(guests) < 1)) return this.setState({ error: 'Please enter the number of guests.' });
+        this.send();
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
