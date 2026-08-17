@@ -249,7 +249,7 @@ input::placeholder{color:#a98b95}
             <option value="+974">+974 Qatar</option>
             <option value="+977">+977 Nepal</option>
           </select>
-          <input type="tel" inputMode="numeric" autocomplete="tel-national" maxlength="15" value="{{ phone }}" onChange="{{ onPhone }}" placeholder="000 000 0000" style="flex:1;min-width:0;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
+          <input type="tel" inputMode="numeric" autocomplete="tel-national" maxlength="10" value="{{ phone }}" onChange="{{ onPhone }}" placeholder="000 000 0000" style="flex:1;min-width:0;box-sizing:border-box;padding:13px 14px;background:#fff;border:1px solid rgba(92,35,51,.16);border-radius:8px;font-size:15px;color:#3b2029">
         </div>
       </div>
       <div>
@@ -388,7 +388,7 @@ class Component extends DCLogic {
       name: s.name, email: s.email, phone: s.phone, dialCode: s.dialCode || '+1-CA', guests: s.guests,
       onName: e => this.setState({ name: e.target.value }),
       onEmail: e => this.setState({ email: e.target.value }),
-      onPhone: e => this.setState({ phone: String(e.target.value || '').replace(/\D/g, '').slice(0, 15) }),
+      onPhone: e => this.setState({ phone: String(e.target.value || '').replace(/\D/g, '').slice(0, 10) }),
       onDialCode: e => this.setState({ dialCode: e.target.value }),
       message: s.message,
       onMessage: e => this.setState({ message: e.target.value }),
@@ -412,7 +412,7 @@ class Component extends DCLogic {
         const { name, email, phone, attending, guests } = this.state;
         if (!name.trim()) return this.setState({ error: 'Please enter your name.' });
         if (!this.isValidEmail(email)) return this.setState({ error: 'Please enter a valid email address with a domain (for example name@gmail.com).' });
-        if (phone.replace(/\D/g, '').length < 7) return this.setState({ error: 'Please enter a valid phone number.' });
+        if (phone.replace(/\D/g, '').length !== 10) return this.setState({ error: 'Please enter a 10-digit phone number.' });
         if (!attending) return this.setState({ error: 'Please let us know if you can attend.' });
         if (attending === 'yes' && (!guests || Number(guests) < 1)) return this.setState({ error: 'Please enter the number of guests.' });
         this.send();
