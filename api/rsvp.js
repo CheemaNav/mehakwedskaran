@@ -28,16 +28,26 @@ function readBody(req) {
   return {};
 }
 
+function parseEmails(value) {
+  return String(value || '')
+    .split(/[,;\n]+/)
+    .map((item) => item.trim())
+    .filter((item) => isValidEmail(item));
+}
+
 function mailConfig() {
   const host = env('SMTP_HOST');
   const user = env('SMTP_USER');
   const pass = (env('SMTP_PASS') || env('SMTP_PASSWORD')).replace(/\s+/g, '');
-  const to = env('MAIL_TO') || user || 'kamaldeep212@gmail.com';
-  const from = env('MAIL_FROM') || user || to;
+  const toList = parseEmails([env('MAIL_TO'), env('MAIL_CC')].filter(Boolean).join(','));
+  if (!toList.length && user) toList.push(user);
+  if (!toList.length) toList.push('kamaldeep212@gmail.com');
+  const to = toList.join(', ');
+  const from = env('MAIL_FROM') || user || toList[0];
   const port = Number(env('SMTP_PORT') || 587);
   const secure = env('SMTP_SECURE') === 'true' || port === 465;
-  const smtpReady = Boolean(host && user && pass && to);
-  return { host, user, pass, to, from, port, secure, smtpReady };
+  const smtpReady = Boolean(host && user && pass && toList.length);
+  return { host, user, pass, to, toList, from, port, secure, smtpReady };
 }
 
 function requestOrigin(req) {
@@ -101,7 +111,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { host, user, pass, to, from, port, secure, smtpReady } = mailConfig();
+  const { host, user, pass, to, toList, from, port, secure, smtpReady } = mailConfig();
 
   const body = readBody(req);
   const name = String(body.name || '').trim();
@@ -166,22 +176,26 @@ module.exports = async (req, res) => {
 
       await transporter.sendMail({
         from: `"Mehak & Karan Wedding RSVP" <${from}>`,
-        to,
+        to: toList,
         replyTo: email,
         subject: `RSVP · ${name} · #Mehran`,
         text,
         html
       });
     } else {
-      await sendViaFormSubmit({
-        to,
-        origin: requestOrigin(req),
-        name,
-        email,
-        subject: `RSVP · ${name} · #Mehran`,
-        rows,
-        text
-      });
+      const origin = requestOrigin(req);
+      const subject = `RSVP · ${name} · #Mehran`;
+      for (const recipient of toList) {
+        await sendViaFormSubmit({
+          to: recipient,
+          origin,
+          name,
+          email,
+          subject,
+          rows,
+          text
+        });
+      }
     }
 
     res.status(200).json({ ok: true });
