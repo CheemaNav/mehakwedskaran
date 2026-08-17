@@ -329,9 +329,7 @@ class Component extends DCLogic {
       submitted_at: new Date().toString()
     };
     const configured = String(this.props.formEndpoint || '').trim();
-    const endpoint = (!configured || configured === '/api/rsvp')
-      ? 'https://formsubmit.co/ajax/kamaldeep212@gmail.com'
-      : configured;
+    const endpoint = configured || '/api/rsvp';
     this.setState({ sending: true, error: '' });
     try {
       const res = await fetch(endpoint, {
