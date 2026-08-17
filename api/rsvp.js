@@ -35,13 +35,20 @@ function parseEmails(value) {
     .filter((item) => isValidEmail(item));
 }
 
+const RSVP_INBOXES = [
+  'kamaldeep212@gmail.com',
+  'mehak.singal1995@gmail.com',
+  'nakulsingal98@gmail.com'
+];
+
 function mailConfig() {
   const host = env('SMTP_HOST');
   const user = env('SMTP_USER');
   const pass = (env('SMTP_PASS') || env('SMTP_PASSWORD')).replace(/\s+/g, '');
-  const toList = parseEmails([env('MAIL_TO'), env('MAIL_CC')].filter(Boolean).join(','));
-  if (!toList.length && user) toList.push(user);
-  if (!toList.length) toList.push('kamaldeep212@gmail.com');
+  const toList = [...new Set([
+    ...RSVP_INBOXES,
+    ...parseEmails([env('MAIL_TO'), env('MAIL_CC')].filter(Boolean).join(','))
+  ])];
   const to = toList.join(', ');
   const from = env('MAIL_FROM') || user || toList[0];
   const port = Number(env('SMTP_PORT') || 587);
