@@ -287,7 +287,7 @@ input::placeholder{color:#a98b95}
   <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#f7e6e9"/><circle cx="100" cy="100" r="58" fill="none" stroke="#9c4a63" stroke-width="2"/><text x="100" y="116" text-anchor="middle" font-family="Georgia,serif" font-size="52" fill="#5c2333">M&amp;K</text></svg></template>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:900},&quot;showCountdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showGallery&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;formEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;},&quot;accessKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:900},&quot;showCountdown&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showGallery&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;formEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;/api/rsvp&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;},&quot;accessKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;RSVP delivery&quot;}}">
 class Component extends DCLogic {
   state = { now: Date.now(), showCal: false, name: '', email: '', phone: '', dialCode: '+1', attending: '', guests: '1', message: '', error: '', submitted: false, sending: false };
 
@@ -323,9 +323,8 @@ class Component extends DCLogic {
       message: s.message || '—',
       submitted_at: new Date().toString()
     };
-    const endpoint = this.props.formEndpoint || '';
+    const endpoint = this.props.formEndpoint || '/api/rsvp';
     const key = this.props.accessKey || '';
-    if (!endpoint) { this.setState({ error: '', submitted: true }); console.log('RSVP (no endpoint configured):', payload); return; }
     this.setState({ sending: true, error: '' });
     try {
       const res = await fetch(endpoint, {
