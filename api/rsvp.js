@@ -60,17 +60,20 @@ async function sendViaFormSubmit({ to, origin, name, email, subject, rows, text 
     },
     body: JSON.stringify({
       _subject: subject,
+      _captcha: 'false',
       name,
       email,
       ...Object.fromEntries(rows),
       message: text
     })
   });
-  const data = await res.json().catch(() => ({}));
+  const raw = await res.text();
+  let data = {};
+  try { data = JSON.parse(raw); } catch { data = { message: raw.slice(0, 300) }; }
   const success = String(data.success) === 'true';
   const activating = /activat/i.test(String(data.message || ''));
   if (!success && !activating) {
-    throw new Error(data.message || 'Could not send RSVP email');
+    throw new Error(data.message || `FormSubmit HTTP ${res.status}`);
   }
   return { activating };
 }
@@ -184,6 +187,6 @@ module.exports = async (req, res) => {
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error('RSVP mail failed:', err);
-    res.status(500).json({ ok: false, error: 'Could not send RSVP email' });
+    res.status(500).json({ ok: false, error: 'Could not send RSVP email', detail: err.message });
   }
 };
