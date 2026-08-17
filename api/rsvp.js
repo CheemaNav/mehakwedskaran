@@ -32,17 +32,50 @@ function mailConfig() {
   const host = env('SMTP_HOST');
   const user = env('SMTP_USER');
   const pass = (env('SMTP_PASS') || env('SMTP_PASSWORD')).replace(/\s+/g, '');
-  const to = env('MAIL_TO') || user;
-  const from = env('MAIL_FROM') || user;
+  const to = env('MAIL_TO') || user || 'kamaldeep212@gmail.com';
+  const from = env('MAIL_FROM') || user || to;
   const port = Number(env('SMTP_PORT') || 587);
   const secure = env('SMTP_SECURE') === 'true' || port === 465;
-  const missing = [
-    !host && 'SMTP_HOST',
-    !user && 'SMTP_USER',
-    !pass && 'SMTP_PASS',
-    !to && 'MAIL_TO'
-  ].filter(Boolean);
-  return { host, user, pass, to, from, port, secure, missing };
+  const smtpReady = Boolean(host && user && pass && to);
+  return { host, user, pass, to, from, port, secure, smtpReady };
+}
+
+function requestOrigin(req) {
+  const origin = String(req.headers.origin || '').trim();
+  if (origin) return origin.replace(/\/$/, '');
+  const host = String(req.headers['x-forwarded-host'] || req.headers.host || '').split(',')[0].trim();
+  const proto = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+  if (host) return `${proto}://${host}`;
+  return 'https://mehakwedskaran-chi.vercel.app';
+}
+
+async function sendViaFormSubmit({ to, origin, name, email, subject, rows, text }) {
+  const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Origin: origin,
+      Referer: `${origin}/`
+    },
+    body: JSON.stringify({
+      _subject: subject,
+      _captcha: 'false',
+      name,
+      email,
+      ...Object.fromEntries(rows),
+      message: text
+    })
+  });
+  const raw = await res.text();
+  let data = {};
+  try { data = JSON.parse(raw); } catch { data = { message: raw.slice(0, 300) }; }
+  const success = String(data.success) === 'true';
+  const activating = /activat/i.test(String(data.message || ''));
+  if (!success && !activating) {
+    throw new Error(data.message || `FormSubmit HTTP ${res.status}`);
+  }
+  return { activating };
 }
 
 module.exports = async (req, res) => {
@@ -55,8 +88,12 @@ module.exports = async (req, res) => {
     return;
   }
   if (req.method === 'GET') {
-    const { missing } = mailConfig();
-    res.status(200).json({ ok: missing.length === 0, mailConfigured: missing.length === 0, missing });
+    const { smtpReady } = mailConfig();
+    res.status(200).json({
+      ok: true,
+      mailConfigured: true,
+      provider: smtpReady ? 'smtp' : 'formsubmit'
+    });
     return;
   }
   if (req.method !== 'POST') {
@@ -64,12 +101,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { host, user, pass, to, from, port, secure, missing } = mailConfig();
-
-  if (missing.length) {
-    res.status(500).json({ ok: false, error: 'Mail is not configured', missing });
-    return;
-  }
+  const { host, user, pass, to, from, port, secure, smtpReady } = mailConfig();
 
   const body = readBody(req);
   const name = String(body.name || '').trim();
@@ -119,30 +151,42 @@ module.exports = async (req, res) => {
   `;
 
   try {
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      requireTLS: port === 587,
-      auth: { user, pass },
-      tls: { minVersion: 'TLSv1.2' },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 20000
-    });
+    if (smtpReady) {
+      const transporter = nodemailer.createTransport({
+        host,
+        port,
+        secure,
+        requireTLS: port === 587,
+        auth: { user, pass },
+        tls: { minVersion: 'TLSv1.2' },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 20000
+      });
 
-    await transporter.sendMail({
-      from: `"Mehak & Karan Wedding RSVP" <${from}>`,
-      to,
-      replyTo: email,
-      subject: `RSVP · ${name} · #Mehran`,
-      text,
-      html
-    });
+      await transporter.sendMail({
+        from: `"Mehak & Karan Wedding RSVP" <${from}>`,
+        to,
+        replyTo: email,
+        subject: `RSVP · ${name} · #Mehran`,
+        text,
+        html
+      });
+    } else {
+      await sendViaFormSubmit({
+        to,
+        origin: requestOrigin(req),
+        name,
+        email,
+        subject: `RSVP · ${name} · #Mehran`,
+        rows,
+        text
+      });
+    }
 
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error('RSVP mail failed:', err);
-    res.status(500).json({ ok: false, error: 'Could not send RSVP email' });
+    res.status(500).json({ ok: false, error: 'Could not send RSVP email', detail: err.message });
   }
 };
